@@ -1,0 +1,12 @@
+﻿# Dependências e build
+node_modules
+dist
+
+# Claude Code
+.claude/
+
+# Credenciais de produção (criado só no servidor)
+backend/web/server/config.local.php
+
+# Material recebido dos clientes (zips grandes; as versões usadas no site ficam em public/images)
+design/recebidos/

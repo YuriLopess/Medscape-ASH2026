@@ -1,0 +1,204 @@
+/*
+  Frente da Home, na mesma língua do ESMO: o azul do painel é o azul da foto, então um vira o outro sem emenda, e o texto
+  branco fica sobre ele. A foto é New Orleans à noite, com o Mississippi virando corrente sanguínea.
+  Cores da paleta Promo (theme-promo.css): #054AA7 e #0F9ED5.
+*/
+
+/* ---------- Banner ---------- */
+.front { --panel: #052f72; position: relative; isolation: isolate; overflow: hidden; color: #fff;
+  background:
+    radial-gradient(ellipse 48% 74% at 12% 10%, rgb(15 158 213 / .42), transparent 72%),
+    linear-gradient(100deg, #054aa7 0%, var(--panel) 48%, #04204f 100%); }
+/* A água e o céu da foto vão surgindo do azul do painel. --photo-left: onde a foto começa (as faixas usam o mesmo valor) */
+.front { --photo-left: 25%; }
+.front .front-media { --fade: linear-gradient(90deg, transparent 0%, rgb(0 0 0 / .03) 8%, rgb(0 0 0 / .08) 15%, rgb(0 0 0 / .17) 21%, rgb(0 0 0 / .33) 27%, rgb(0 0 0 / .56) 33%, rgb(0 0 0 / .82) 39%, rgb(0 0 0 / .96) 43%, #000 46%);
+  position: absolute; inset: 0 0 0 var(--photo-left); z-index: -1; background: none; -webkit-mask-image: var(--fade); mask-image: var(--fade); }
+.front-media img { width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; }
+/* Véu azul só onde há texto, para nenhuma luz da cidade tirar a leitura */
+.front-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(4 40 104 / .45) 0%, rgb(4 40 104 / .4) 24%, transparent 38%); }
+/* As duas faixas do ESMO formam aqui uma fita só, à esquerda da cidade: nasce azul e chega vermelha à corrente */
+.front-arcs { position: absolute; inset: 0 0 0 var(--photo-left); z-index: -1; width: calc(100% - var(--photo-left)); height: 100%; overflow: visible; pointer-events: none; }
+.front-arcs path { fill: none; vector-effect: non-scaling-stroke; }
+.front-arcs .front-arcs-band { fill: url(#front-band); }
+.front-media .media-placeholder { background: linear-gradient(120deg, var(--panel), var(--accent-light)); }
+.front-media .media-placeholder span { display: none; } /* o nome do evento já está no texto */
+
+.front-inner { display: flex; align-items: center; min-height: clamp(460px, 31vw, 580px); padding-block: 56px; }
+.front-text { max-width: 720px; }
+.front-event { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: .06em; }
+.front-dates i { font-style: normal; }
+.front-dates { margin: 6px 0 0; font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.front-title { margin: 24px 0 18px; font-family: var(--font-heading); font-size: clamp(32px, 2.75vw, 46px); font-weight: 700; line-height: 1.08; letter-spacing: -.01em; color: #fff; text-shadow: 0 2px 22px rgb(2 22 66 / .55); }
+.front-title span { display: block; white-space: nowrap; }
+.front-lead { max-width: 33em; margin: 0 0 30px; font-size: clamp(15px, 1.15vw, 18px); line-height: 1.55; text-wrap: balance; }
+.front .btn { padding: 14px 26px; border-radius: 5px; color: #054aa7; }
+/* Linha de rodapé do texto, como no ESMO: cidade e lema da cobertura */
+.front-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px; margin: 40px 0 0; font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.front-meta span { display: inline-flex; align-items: center; gap: 14px; }
+.front-meta svg { width: 18px; height: 18px; }
+.front-meta-divider { width: 1px; height: 30px; background: rgb(255 255 255 / .45); }
+.front :focus-visible { outline-color: #fff; }
+
+/* ---------- Destaques da cobertura: capa grande + lista ---------- */
+/* Logo abaixo do banner: menos espaço em cima do que entre as outras seções */
+.fv.section { padding-top: clamp(36px, 4vw, 56px); }
+/* Fio sob o título com o degradê da fita do banner (azul claro, azul, magenta) */
+.fv-head { position: relative; padding-bottom: 26px; }
+.fv-head::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--accent-light) 0%, #054aa7 38%, rgb(160 43 147 / .55) 72%, rgb(160 43 147 / 0) 100%); }
+.fv-lead { margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: var(--text); }
+.fv-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(28px, 3.5vw, 56px); margin-top: 44px; }
+
+/* Linha de estado sob cada título: texto normal, sem caixa alta */
+.fv-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+.fv-meta > span + span::before { content: '·'; margin-inline: 8px; opacity: .7; }
+.fv-meta-state { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; color: var(--kind); }
+.fv-meta-state svg { width: 13px; height: 13px; }
+.fv-meta-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-light); box-shadow: 0 0 0 3px rgb(15 158 213 / .18); }
+
+/* Play só quando há vídeo: círculo de vidro */
+.fv-play { position: absolute; left: 10px; bottom: 10px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / .9); background: rgb(3 28 74 / .35); color: #fff; backdrop-filter: blur(4px); transition: background .2s, color .2s; }
+.fv-play svg { width: 15px; height: 15px; margin-left: 2px; }
+.fv-play--large { left: auto; right: 24px; top: 24px; bottom: auto; width: 62px; height: 62px; border-width: 2px; }
+.fv-play--large svg { width: 24px; height: 24px; }
+
+/* Capa grande: a imagem inteira, com título branco sobre o mesmo azul-noite do banner */
+.fv-main { min-width: 0; }
+.fv-feature { position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; min-height: 100%; border-radius: 12px; overflow: hidden; color: #fff; text-decoration: none; box-shadow: 0 22px 44px -26px rgb(var(--navy-rgb) / .55); }
+/* A imagem ocupa a capa inteira; a proporção é da capa, que acompanha a altura da lista ao lado */
+.fv .fv-feature-media { position: absolute; inset: 0; background: #052f72; }
+.fv-feature-media img { transition: transform .6s var(--ease-out, ease); }
+.fv-feature-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(3 28 74 / 0) 34%, rgb(3 28 74 / .55) 60%, rgb(3 24 64 / .95) 100%); }
+.fv-feature-body { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 10px; padding: clamp(22px, 2.8vw, 36px); }
+.fv-feature-title { max-width: 22ch; font-family: var(--font-heading); font-size: clamp(24px, 2.4vw, 34px); font-weight: 700; line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
+.fv-feature-text { max-width: 50ch; font-size: 15.5px; line-height: 1.5; color: rgb(255 255 255 / .84); }
+.fv-feature .fv-meta { margin-top: 4px; color: rgb(255 255 255 / .72); }
+.fv-feature .fv-meta-state { color: #fff; }
+.fv-feature:hover img, .fv-feature:focus-visible img { transform: scale(1.035); }
+.fv-feature:hover .fv-play, .fv-feature:focus-visible .fv-play { background: #fff; color: var(--ink); }
+.fv-feature:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; }
+
+/* Lista ao lado: sem caixas, só miniatura, texto e um fio entre os itens */
+.fv-list { display: grid; grid-auto-rows: 1fr; margin: 0; padding: 0; list-style: none; }
+.fv-list li { display: flex; }
+.fv-list li + li { border-top: 1px solid var(--line); }
+.fv-row { display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr); align-items: center; gap: 24px; width: 100%; padding: 22px 0; text-decoration: none; }
+.fv-list li:first-child .fv-row { padding-top: 0; }
+.fv-list li:last-child .fv-row { padding-bottom: 0; }
+.fv .fv-row-media { aspect-ratio: 16 / 10; border-radius: 8px; }
+.fv-row-media img { transition: transform .5s var(--ease-out, ease); }
+.fv-row-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.fv-row-title { font-family: var(--font-heading); font-size: 18px; font-weight: 700; line-height: 1.28; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; transition: color .2s; }
+.fv-row-text { font-size: 14px; line-height: 1.45; color: var(--text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.fv-row .fv-meta { flex-direction: column; align-items: flex-start; gap: 3px; margin-top: 4px; }
+.fv-row .fv-meta > span + span::before { content: none; } /* coluna estreita: estado e natureza em linhas próprias */
+.fv-row:hover img, .fv-row:focus-visible img { transform: scale(1.05); }
+.fv-row:hover .fv-row-title, .fv-row:focus-visible .fv-row-title { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.fv-row:hover .fv-play { background: #fff; color: var(--ink); }
+.fv-row:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 4px; border-radius: 8px; }
+
+/* ---------- Apoiadores (um só): título no meio entre dois fios com o degradê dos Destaques, logo embaixo ---------- */
+.supporters.section { padding-block: clamp(24px, 3vw, 48px) clamp(64px, 7vw, 104px); }
+.supporters .sp-head { display: flex; align-items: center; gap: clamp(16px, 2.5vw, 32px); }
+.supporters .sp-head::before, .supporters .sp-head::after { content: ''; flex: 1; height: 3px; border-radius: 3px; }
+.supporters .sp-head::before { background: linear-gradient(90deg, rgb(15 158 213 / 0) 0%, var(--accent-light) 45%, #054aa7 100%); }
+.supporters .sp-head::after { background: linear-gradient(90deg, #054aa7 0%, rgb(160 43 147 / .55) 55%, rgb(160 43 147 / 0) 100%); }
+.supporters .sp-head .section-title { flex: none; text-align: center; }
+.sp-single { display: flex; justify-content: center; padding-top: clamp(28px, 3vw, 44px); }
+.sp-single img { display: block; width: auto; height: clamp(46px, 4.4vw, 60px); }
+
+@media (max-width: 1000px) {
+  .fv-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .fv-feature { aspect-ratio: 16 / 9; }
+  .fv-list li:first-child .fv-row { padding-top: 20px; }
+  .fv-list li:first-child { border-top: 1px solid var(--line); }
+  .fv-row { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); }
+}
+/* Tablet: a capa ocupa a largura toda e os outros três vídeos viram uma fileira de cards embaixo (miniatura em cima,
+   texto embaixo), em vez de linhas largas com metade vazia */
+@media (min-width: 641px) and (max-width: 1000px) {
+  .fv-grid { gap: 32px; }
+  .fv .fv-list { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: auto; gap: clamp(16px, 2.6vw, 28px); }
+  .fv .fv-list li { border-top: 0; }
+  .fv .fv-list li .fv-row { grid-template-columns: minmax(0, 1fr); align-content: start; align-items: start; gap: 14px; padding: 0; }
+  .fv .fv-row-title { font-size: clamp(15.5px, 1.9vw, 17px); }
+  .fv .fv-row-text { font-size: 13.5px; }
+}
+@media (max-width: 640px) {
+  .fv.section { padding-bottom: 44px; }
+  .fv-head { padding-bottom: 20px; }
+  .fv-grid { margin-top: 28px; gap: 24px; }
+  .fv-feature { aspect-ratio: 1 / 1; }
+  .fv-feature-media img { object-position: 64% 50%; }
+  .fv-play--large { width: 50px; height: 50px; right: 16px; top: 16px; }
+  .fv-feature-text { font-size: 14px; }
+  .fv-row { grid-template-columns: 40% minmax(0, 1fr); gap: 14px; padding-block: 18px; }
+  .fv-list li:first-child .fv-row { padding-top: 18px; }
+  .fv-row-title { font-size: 15.5px; }
+  .fv-row-text { display: none; }
+  .fv-meta { font-size: 12px; }
+}
+/* Celular largo / deitado: o quadrado ficaria alto demais */
+@media (min-width: 481px) and (max-width: 640px) {
+  .fv-feature { aspect-ratio: 4 / 3; }
+}
+
+@media (min-width: 1280px) {
+  .front .front-media { --fade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1914 942' preserveAspectRatio='xMaxYMid slice'%3E%3Cfilter id='a' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='46'/%3E%3C/filter%3E%3Cfilter id='b' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='120'/%3E%3C/filter%3E%3Cpath d='M860 -260 L834 -30 C 704 172, 678 462, 764 652 C 812 758, 898 866, 1000 985 L1180 1240 L2500 1240 L2500 -260 Z' transform='translate(-40 0)' filter='url(%23b)' opacity='.3'/%3E%3Cpath d='M860 -260 L834 -30 C 704 172, 678 462, 764 652 C 812 758, 898 866, 1000 985 L1180 1240 L2500 1240 L2500 -260 Z' transform='translate(34 0)' filter='url(%23a)'/%3E%3C/svg%3E"); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+  .front-media::after { background: none; }
+}
+/* Telas largas: a foto começa mais à direita, para o título nunca encostar na fita */
+@media (min-width: 1280px) and (max-width: 1599px) { .front { --photo-left: 30%; } }
+@media (min-width: 1600px) { .front { --photo-left: 34%; } }
+/* O título em espanhol é mais longo: menor, para não encostar nas faixas */
+@media (min-width: 901px) { .front-title:lang(es) { font-size: clamp(30px, 2.45vw, 41px); } }
+@media (max-width: 1279px) {
+  /* Menos espaço: o título avança sobre a foto, então o véu é mais forte e as faixas saem */
+  .front { --photo-left: 12%; }
+  .front-media::after { background: linear-gradient(90deg, rgb(4 40 104 / .55) 0%, rgb(4 40 104 / .55) 38%, rgb(4 40 104 / .35) 48%, transparent 62%); }
+  .front-arcs { display: none; }
+}
+@media (max-width: 900px) {
+  /* Tablet: a foto vai para trás do texto, com véu azul mais forte */
+  .front { --photo-left: 0%; }
+  .front .front-media { --fade: linear-gradient(90deg, rgb(0 0 0 / .1) 0%, rgb(0 0 0 / .22) 30%, rgb(0 0 0 / .58) 56%, #000 82%); }
+  .front-media img { object-position: 82% 50%; }
+  .front-media::after { background: linear-gradient(90deg, rgb(3 34 92 / .62) 0%, rgb(3 34 92 / .55) 60%, transparent 96%); }
+  .front-text { max-width: 470px; }
+  .front-dates span { display: block; }
+  .front-dates i { display: none; } /* data e cidade em duas linhas, sem o ponto entre elas */
+  /* A cidade já está na linha da data: no rodapé do texto fica só o lema (sem o fio solto quando a linha quebra) */
+  .front-meta .front-meta-city, .front-meta .front-meta-divider { display: none; }
+}
+@media (max-width: 640px) {
+  /* Celular: foto no alto, dissolvendo no azul; texto embaixo */
+  .front { background: linear-gradient(180deg, #0b2f6b 0%, #054aa7 46%, var(--panel) 100%); }
+  /* Faixa de foto com altura limitada: a cidade aparece inteira e o título e o botão chegam à primeira tela */
+  .front .front-media { position: relative; inset: auto; width: 100%; height: clamp(272px, 80vw, 400px); z-index: 0;
+    --fade: linear-gradient(180deg, #000 66%, rgb(0 0 0 / .72) 80%, rgb(0 0 0 / .28) 92%, transparent 100%); }
+  .front-media::after { background: none; }
+  .front-media img { object-position: 76% 0%; }
+  .front-disclosure { display: block; position: absolute; top: 14px; left: 0; right: 0; z-index: 2; }
+  .front-inner { min-height: 0; margin-top: -44px; padding-block: 0 44px; position: relative; z-index: 1; }
+  .front-text { max-width: 520px; }
+  .front-event { display: inline-flex; padding: 5px 12px; border: 1px solid rgb(255 255 255 / .4); border-radius: 999px; background: rgb(4 40 100 / .5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); font-size: 13px; letter-spacing: .1em; }
+  .front-dates { margin-top: 12px; font-size: 11.5px; line-height: 1.6; letter-spacing: .08em; }
+  .front-title { margin: 14px 0; font-size: clamp(28px, 8vw, 36px); }
+  .front-title span { white-space: normal; text-wrap: balance; }
+  .front-lead { max-width: none; margin-bottom: 24px; font-size: 15.5px; }
+  .front .btn { width: 100%; justify-content: center; min-height: 52px; font-size: 16px; }
+  /* Lema separado do botão por um fio */
+  .front-meta { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgb(255 255 255 / .2); font-size: 10.5px; letter-spacing: .14em; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .front-media { animation: enter-fade 1.4s ease-out both; }
+  .front-media img { animation: enter-zoom 2.2s var(--ease-out) both; }
+  .front-text > * { animation: enter-rise .8s var(--ease-out) both; }
+  .front-text > :nth-child(2) { animation-delay: .1s; }
+  .front-text > :nth-child(3) { animation-delay: .22s; }
+  .front-text > :nth-child(4) { animation-delay: .36s; }
+  .front-text > :nth-child(5) { animation-delay: .48s; }
+  .front-text > :nth-child(6) { animation-delay: .6s; }
+  .front-disclosure { animation: enter-fade .8s .9s ease-out both; }
+  .front-arcs { animation: enter-wipe-down 1.8s .5s cubic-bezier(.55, 0, .2, 1) both; }
+}

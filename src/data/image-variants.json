@@ -1,0 +1,50 @@
+{
+  "images/cobertura-arte.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    2172
+  ],
+  "images/hero.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    1914
+  ],
+  "images/videos/pos-ash.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    1672
+  ],
+  "images/videos/video-1.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    1774
+  ],
+  "images/videos/video-2.jpg": [
+    480,
+    720,
+    960,
+    1280
+  ],
+  "images/videos/video-3.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    1774
+  ],
+  "images/videos/video-4.jpg": [
+    480,
+    720,
+    960,
+    1280,
+    1672
+  ]
+}

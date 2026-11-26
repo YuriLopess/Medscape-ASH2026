@@ -1,0 +1,43 @@
+# Ambiente local que espelha a produção (Debian + Apache + PHP + MariaDB).
+# Serve o site já construído em ./dist em http://localhost:8083 — rode `npm run build:login` antes.
+# Portas (8083/3310) diferentes das do HPN (8080/3307), do Opella (8081/3308) e da SBOC (8082/3309) para os quatro rodarem juntos.
+services:
+  web:
+    build: ./docker
+    ports:
+      - "8083:80"
+    volumes:
+      - ./dist:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: ash_2026
+      DB_USER: ash_2026
+      DB_PASS: ash-local
+      # link sem login local: http://localhost:8083/?acesso=banner-local-0123456789 (código só de teste)
+      BANNER_CODE: banner-local-0123456789
+      ADMIN_USER: admin
+      # Senha local "hpn-local" (mesmo hash de teste do HPN; bcrypt, `$` escapado como `$$` pro Compose).
+      ADMIN_PASSWORD_HASH: "$$2y$$10$$Rc3QlSCsfRuMmAoM/CztOOppCLwOoyxHVaviMa5tdFnDon7s04oYq"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: ash_2026
+      MARIADB_USER: ash_2026
+      MARIADB_PASSWORD: ash-local
+      MARIADB_ROOT_PASSWORD: ash-local-root
+    ports:
+      - "3310:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  db-data:

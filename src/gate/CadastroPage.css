@@ -1,0 +1,387 @@
+/*
+  Tela de cadastro/login — paleta "Promo" do site (src/theme-promo.css): azul #054AA7 para ação e
+  títulos, #0F9ED5 como detalhe, Montserrat nos títulos e Poppins no texto.
+  O gate não carrega styles.css nem o Tailwind do app: esta folha é autocontida.
+  Tokens em :root (não escopados a .cadastro-screen) porque o Select abre num portal em
+  document.body — variável escopada numa classe não chegaria lá.
+*/
+:root {
+  --gate-action: #054aa7;
+  --gate-action-hover: #156082;
+  --gate-accent: #0f9ed5;
+  --gate-ink: #0f2742;
+  --gate-muted: #5b6d80;
+  --gate-placeholder: #9aa7b4;
+  --gate-line: #dfe7ee;
+  --gate-line-strong: #b9cbdc;
+  --gate-soft: #e8f5fb;
+  --gate-field-bg: #f7fafc;
+  --gate-error: #c2410c;
+  --gate-focus-ring: rgb(5 74 167 / .16);
+  --gate-radius: 6px;
+  --gate-font-heading: 'Montserrat Variable', 'Montserrat', system-ui, sans-serif;
+  --gate-font-body: 'Poppins', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: var(--gate-ink); font: 15px/1.55 var(--gate-font-body); -webkit-font-smoothing: antialiased; }
+h1, h2, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ── Tela inteira: metade da marca à esquerda (parada), formulário à direita (rola) ── */
+.cadastro-screen { min-height: 100vh; min-height: 100dvh; background: #fff; }
+
+.cadastro-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ── Metade da marca: o banner da Home em pé ── */
+.cadastro-hero {
+  /* Azul institucional (paleta Promo), também no véu sobre a imagem */
+  --hero: #054aa7;
+  --hero-rgb: 5 74 167;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--hero);
+  color: #fff;
+}
+/* Imagem do banner na metade de baixo, fundida na cor de cima para o texto ficar sempre legível */
+.cadastro-hero-photo { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
+.cadastro-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(180deg,
+    var(--hero) 0%,
+    var(--hero) 40%,
+    rgb(var(--hero-rgb) / .92) 50%,
+    rgb(var(--hero-rgb) / .74) 62%,
+    rgb(var(--hero-rgb) / .52) 76%,
+    rgb(var(--hero-rgb) / .62) 100%);
+}
+/* Mesma luz suave do banner, no alto à esquerda */
+.cadastro-hero::after {
+  content: '';
+  position: absolute;
+  inset: -10% auto auto -20%;
+  width: 90%;
+  height: 70%;
+  z-index: -2;
+  pointer-events: none;
+  filter: blur(50px);
+  background: radial-gradient(ellipse 60% 50% at 40% 30%, rgb(15 158 213 / .45), transparent 72%);
+}
+/* Arcos só no canto de cima, no espaço livre ao lado dos logos: não passam por trás do texto */
+.cadastro-hero-arcs { position: absolute; top: 0; right: 0; z-index: -1; width: 44%; height: clamp(140px, 18vh, 200px); pointer-events: none; }
+.cadastro-hero-arcs path { fill: none; stroke: var(--gate-accent); stroke-width: 2; opacity: .75; vector-effect: non-scaling-stroke; }
+
+.cadastro-hero-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(32px, 5vh, 56px) clamp(32px, 5vw, 72px);
+}
+
+.cadastro-logos { display: flex; align-items: center; gap: 20px; }
+.cadastro-logos img { width: auto; height: 34px; }
+
+.cadastro-hero-main { margin-top: clamp(40px, 9vh, 96px); max-width: 720px; animation: cadastro-item-in .7s .1s cubic-bezier(.16, 1, .3, 1) backwards; }
+.cadastro-hero-kicker { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; opacity: .92; }
+.cadastro-hero-title {
+  margin-top: 18px;
+  font-family: var(--gate-font-heading);
+  font-size: clamp(30px, 3vw, 52px);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+.cadastro-hero-title span { display: block; text-wrap: balance; }
+.cadastro-hero-lead { margin-top: 18px; max-width: 30em; font-size: clamp(15px, 1.1vw, 16.5px); line-height: 1.55; color: rgb(255 255 255 / .9); text-wrap: pretty; }
+
+/* O que o cadastro libera, no pé da metade azul, sobre a foto */
+.cadastro-hero-foot { margin-top: auto; padding-top: 32px; max-width: 440px; }
+.cadastro-highlights-label { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgb(255 255 255 / .75); }
+.cadastro-highlights { margin-top: 14px; display: grid; gap: 10px; }
+.cadastro-highlights li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 500;
+  text-shadow: 0 1px 10px rgb(3 22 60 / .5);
+  animation: cadastro-item-in .55s cubic-bezier(.16, 1, .3, 1) backwards;
+}
+.cadastro-highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gate-accent);
+  box-shadow: 0 0 0 3px rgb(15 158 213 / .25);
+}
+.cadastro-highlights li:nth-child(1) { animation-delay: .25s; }
+.cadastro-highlights li:nth-child(2) { animation-delay: .33s; }
+.cadastro-highlights li:nth-child(3) { animation-delay: .41s; }
+
+/* ── Formulário ── */
+.cadastro-form-pane {
+  display: flex;
+  justify-content: center;
+  padding: clamp(32px, 6vh, 72px) clamp(24px, 5vw, 80px) 40px;
+  animation: cadastro-rise .55s cubic-bezier(.16, 1, .3, 1) backwards;
+}
+.cadastro-form-inner { display: flex; flex-direction: column; width: 100%; max-width: 560px; }
+
+/* alternância Criar cadastro / Entrar */
+.cadastro-tabs { align-self: flex-start; display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--gate-soft); }
+.cadastro-tabs button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gate-muted);
+  cursor: pointer;
+  transition: background-color .2s, color .2s, box-shadow .2s;
+}
+.cadastro-tabs button:hover { color: var(--gate-action); }
+.cadastro-tabs button[aria-pressed='true'] {
+  background: #fff;
+  color: var(--gate-action);
+  box-shadow: 0 1px 2px rgb(5 74 167 / .14), inset 0 -2px 0 var(--gate-accent);
+}
+.cadastro-tabs button:focus-visible { outline: 2px solid var(--gate-action); outline-offset: 2px; }
+
+.cadastro-title {
+  margin-top: 28px;
+  font-family: var(--gate-font-heading);
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--gate-action);
+}
+
+.cadastro-subtitle { margin: 10px 0 32px; font-size: 15px; line-height: 1.55; color: var(--gate-muted); max-width: 54ch; }
+
+.cadastro-form { display: flex; flex-direction: column; gap: 30px; }
+.cadastro-group { display: flex; flex-direction: column; gap: 16px; }
+.cadastro-group-tag {
+  font-family: var(--gate-font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--gate-action);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gate-line);
+}
+
+.cadastro-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+
+.cadastro-field { display: flex; flex-direction: column; gap: 7px; }
+.cadastro-field label { font-size: 13px; font-weight: 600; color: var(--gate-ink); }
+.cadastro-field label .req { margin-left: 2px; color: var(--gate-accent); }
+
+.cadastro-field input {
+  width: 100%;
+  min-width: 0; /* campos têm largura mínima própria; sem isso o grid estoura no celular */
+  font: inherit;
+  font-size: 15px;
+  padding: 13px 14px;
+  border: 1px solid var(--gate-line);
+  border-radius: var(--gate-radius);
+  color: var(--gate-ink);
+  background: var(--gate-field-bg);
+  transition: border-color .18s, box-shadow .18s, background-color .18s;
+}
+.cadastro-field input:hover { border-color: var(--gate-line-strong); background: #fff; }
+.cadastro-field input:focus-visible {
+  outline: none;
+  border-color: var(--gate-action);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--gate-focus-ring);
+}
+.cadastro-field input::placeholder { color: var(--gate-placeholder); }
+.cadastro-field.has-error input { border-color: var(--gate-error); background: #fff; }
+
+.cadastro-field-msg { font-size: 13px; line-height: 1.4; color: var(--gate-error); }
+
+/* Honeypot: fora da tela, não display:none, que alguns bots sabem ignorar. */
+.cadastro-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Campo de senha com alternador de visibilidade embutido. */
+.cadastro-password { position: relative; }
+.cadastro-password input { padding-right: 48px; }
+.cadastro-password input::-ms-reveal,
+.cadastro-password input::-ms-clear { display: none; }
+.cadastro-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--gate-muted);
+  cursor: pointer;
+  transition: color .15s, background-color .15s;
+}
+.cadastro-password-toggle:hover { color: var(--gate-action); background: var(--gate-soft); }
+.cadastro-password-toggle:focus-visible { outline: 2px solid var(--gate-action); outline-offset: 1px; }
+
+/* declaração: caixa de seleção num bloco destacado, para não passar despercebida */
+.cadastro-checkbox-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--gate-line);
+  border-radius: var(--gate-radius);
+  background: var(--gate-field-bg);
+  cursor: pointer;
+  transition: border-color .15s, background-color .15s;
+}
+.cadastro-checkbox-field:hover { border-color: var(--gate-line-strong); background: #fff; }
+.cadastro-checkbox-field.has-error { border-color: var(--gate-error); }
+.cadastro-checkbox-field input { margin-top: 3px; width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--gate-action); cursor: pointer; }
+.cadastro-checkbox-field span { font-size: 14px; line-height: 1.5; color: var(--gate-ink); }
+
+.cadastro-submit {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 15px 24px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--gate-action);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s, box-shadow .2s;
+}
+.cadastro-submit::after { content: '→'; display: inline-block; margin-left: 8px; transition: transform .2s; }
+.cadastro-submit:hover { background: var(--gate-action-hover); box-shadow: 0 10px 22px -8px rgb(5 74 167 / .45); }
+.cadastro-submit:hover::after { transform: translateX(3px); }
+.cadastro-submit:focus-visible { outline: 3px solid var(--gate-focus-ring); outline-offset: 2px; }
+.cadastro-submit:disabled { opacity: .7; cursor: progress; box-shadow: none; }
+.cadastro-submit:disabled::after { content: none; }
+
+.cadastro-alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 13px 16px;
+  border-left: 3px solid var(--gate-error);
+  border-radius: var(--gate-radius);
+  background: rgb(194 65 12 / .07);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gate-ink);
+}
+
+.cadastro-link {
+  font: inherit;
+  font-weight: 600;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gate-action);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(5 74 167 / .35);
+  transition: text-decoration-color .15s;
+}
+.cadastro-link:hover { text-decoration-color: currentColor; }
+.cadastro-link:focus-visible { outline: 2px solid var(--gate-action); outline-offset: 2px; border-radius: 2px; }
+
+.cadastro-footer { display: grid; gap: 4px; margin-top: auto; padding-top: 40px; }
+.cadastro-footer p { font-size: 12px; line-height: 1.6; color: var(--gate-muted); }
+
+/* ── Movimento ── */
+@keyframes cadastro-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cadastro-item-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cadastro-leave {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: scale(.985); }
+}
+.cadastro-screen.is-leaving { animation: cadastro-leave .45s cubic-bezier(.4, 0, 1, 1) both; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cadastro-form-pane,
+  .cadastro-hero-main,
+  .cadastro-highlights li { animation: none; }
+  .cadastro-screen.is-leaving { animation-duration: .01s; }
+  .cadastro-submit::after { transition: none; }
+}
+
+/* ── Responsivo ── */
+/* senhas lado a lado só com espaço para o placeholder e o botão do olho */
+@media (max-width: 1240px) {
+  .cadastro-grid-2--wide { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 1100px) {
+  .cadastro-shell { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+}
+
+/* Celular e tablet em pé: a metade azul vira um banner com foto no alto, e o formulário vem embaixo */
+@media (max-width: 900px) {
+  .cadastro-shell { grid-template-columns: minmax(0, 1fr); }
+  .cadastro-hero { position: relative; height: auto; }
+  .cadastro-hero::before {
+    background: linear-gradient(180deg, var(--hero) 0%, rgb(var(--hero-rgb) / .9) 45%, rgb(var(--hero-rgb) / .7) 100%);
+  }
+  .cadastro-hero-arcs { width: 60%; height: 90px; }
+  /* Texto do banner na mesma coluna do formulário (centralizada no tablet) */
+  .cadastro-hero-inner { height: auto; padding: 24px max(16px, calc((100% - 560px) / 2)) 32px; }
+  .cadastro-logos img { height: 28px; }
+  .cadastro-hero-main { margin-top: 36px; }
+  .cadastro-hero-kicker { font-size: 11px; }
+  .cadastro-hero-title { margin-top: 10px; font-size: clamp(26px, 7vw, 34px); }
+  .cadastro-hero-lead { margin-top: 12px; font-size: 14.5px; }
+  .cadastro-hero-foot { display: none; }
+
+  .cadastro-form-pane { padding: 28px 16px 32px; }
+  .cadastro-tabs { align-self: stretch; display: flex; }
+  .cadastro-tabs button { flex: 1; padding: 11px 12px; }
+  .cadastro-title { margin-top: 22px; font-size: 24px; }
+  .cadastro-subtitle { margin-bottom: 26px; font-size: 14px; }
+  .cadastro-form { gap: 26px; }
+  .cadastro-group { gap: 14px; }
+  .cadastro-grid-2 { gap: 14px 12px; }
+  .cadastro-field input,
+  .cadastro-field .cs-select-trigger { font-size: 16px; } /* 16px evita o zoom automático do iOS ao focar */
+  .cadastro-checkbox-field { padding: 14px; }
+  .cadastro-submit { width: 100%; }
+  .cadastro-footer { padding-top: 28px; }
+}
+
+@media (max-width: 340px) {
+  .cadastro-grid-2 { grid-template-columns: minmax(0, 1fr); }
+}

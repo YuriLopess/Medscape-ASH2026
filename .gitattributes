@@ -1,0 +1,5 @@
+# Vão para servidores Linux (o deploy.sh roda trechos na VPS): sempre LF.
+*.sh text eol=lf
+*.php text eol=lf
+.htaccess text eol=lf
+*.sql text eol=lf
