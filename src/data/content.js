@@ -192,6 +192,10 @@ export function buildContent(lang) {
   const L = locales[lang] ?? locales[defaultLang];
 
   const event = { ...eventBase, ...L.event, ...L.editions?.[EDITION] };
+  // Último dia do congresso por extenso ("15 de dezembro"): diz quando sai o Pós-ASH
+  event.endLabel = event.end
+    ? new Intl.DateTimeFormat(L.htmlLang, { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${event.end}T00:00:00Z`))
+    : null;
 
   // Cada dia do congresso já formatado no idioma atual (dia da semana, número, mês)
   const part = (opts) => new Intl.DateTimeFormat(L.htmlLang, { ...opts, timeZone: 'UTC' });

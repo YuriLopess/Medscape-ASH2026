@@ -12,9 +12,10 @@ import { useContent } from '../i18n.jsx';
 import { trackCard } from '../analytics.js';
 
 // Player: usa o vídeo hospedado no próprio site (videoSrc). Sem arquivo ainda, a capa mostra "Em breve" (e a data
-// prevista, se houver), em vez de um botão de play que não faz nada. No Pós-ASH, a frase do briefing.
+// prevista, se houver), em vez de um botão de play que não faz nada. No Pós-ASH, a frase do briefing já está na
+// abertura: aqui o quadro diz quando o conteúdo chega (depois do último dia do congresso).
 function VideoPlayer({ item }) {
-  const { page, ui } = useContent();
+  const { event, page, ui } = useContent();
 
   if (item.videoSrc) {
     return (
@@ -35,9 +36,8 @@ function VideoPlayer({ item }) {
             <span className="soon-dot" aria-hidden="true" />
             {ui.soon}
           </span>
-          {isPost && <p className="cp-player-soon-date">{page.postSoon}</p>}
           {!isPost && item.dateLabel && <p className="cp-player-soon-date">{ui.soonExpected(item.dateLabel)}</p>}
-          {!isPost && <p className="cp-player-soon-note">{page.videoSoon}</p>}
+          <p className="cp-player-soon-note">{isPost ? page.postSoonNote(event.name, event.endLabel) : page.videoSoon}</p>
         </div>
       </Media>
     </div>
@@ -95,7 +95,9 @@ export default function ContentPage({ item, heading }) {
             )}
             <h1 className="cp-title">{heading ?? item.title}</h1>
             <p className="cp-byline">{item.dateLabel ? page.byline(event.name, item.dateLabel) : ui.coverageOf(event.name)}</p>
-            {summary && <p className={`cp-summary${isPost && item.upcoming ? ' cp-summary--notice' : ''}`}>{summary}</p>}
+            {/* No Pós-ASH ainda sem vídeo, a frase do briefing ("Conteúdo disponível após o congresso.") é o texto de apoio,
+                no mesmo formato das páginas de vídeo */}
+            {summary && <p className="cp-summary">{summary}</p>}
           </div>
           {/* Imagem de fundo da abertura, encostada à direita; à esquerda, o fundo continua na cor da borda dela.
               Igual em todas as páginas internas */}

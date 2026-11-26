@@ -277,6 +277,7 @@ export default {
     coi: 'Conflitos de interesse',
     postTitle: (name) => `Pós-${name}`,
     postSoon: 'Conteúdo disponível após o congresso.',
+    postSoonNote: (name, end) => `A análise pós-congresso será publicada aqui depois do encerramento do ${name}${end ? `, em ${end}` : ''}.`,
     videoKicker: 'Vídeo da cobertura',
     textKicker: 'Notícia da cobertura',
     synthesisKicker: 'Síntese final',

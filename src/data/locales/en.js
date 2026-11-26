@@ -274,6 +274,7 @@ export default {
     coi: 'Conflicts of interest',
     postTitle: (name) => `Post-${name}`,
     postSoon: 'Content available after the congress.',
+    postSoonNote: (name, end) => `The post-congress analysis will be published here after ${name} ends${end ? ` on ${end}` : ''}.`,
     videoKicker: 'Coverage video',
     textKicker: 'Coverage news',
     synthesisKicker: 'Final synthesis',

@@ -876,7 +876,6 @@ button { font: inherit; color: inherit; }
 .cp-player-soon-note { max-width: 40ch; font-size: 14.5px; line-height: 1.5; color: rgb(255 255 255 / .85); }
 .cp-player { position: relative; }
 /* Frase temporária do Pós-ASH, em destaque na abertura */
-.cp-summary--notice { width: fit-content; padding: 12px 18px; border-left: 3px solid var(--kind); border-radius: 0 8px 8px 0; background: #fff; font-weight: 600; color: var(--ink); }
 /* Selo do patrocinador no canto do vídeo: fundo branco para a logo manter as cores originais */
 .cp-player-sponsor { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 14px 12px; border-radius: 8px; background: rgb(255 255 255 / .95); box-shadow: 0 6px 18px rgb(2 20 60 / .25); pointer-events: none; }
 .cp-player-sponsor-label { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -1445,7 +1444,6 @@ html:has(.hl-reader[open]) { overflow: hidden; }
   .cp .cp-title { margin: 0 0 6px; font-size: clamp(26px, 7.4vw, 30px); }
   .cp .cp-byline { margin: 0 0 10px; font-size: 13px; }
   .cp .cp-summary { font-size: 15.5px; line-height: 1.55; }
-  .cp .cp-summary--notice { padding: 10px 14px; font-size: 15px; }
   .cp .vp-layout { padding-top: 20px; }
   /* "Em breve" numa faixa de vidro no pé da capa, em vez de um quadro que cobria quase toda a imagem */
   .cp .cp-player-soon { left: 10px; right: 10px; top: auto; bottom: 10px; width: auto; align-items: flex-start; gap: 2px; padding: 10px 14px; border-radius: 10px; text-align: left; transform: none; }
