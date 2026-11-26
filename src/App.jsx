@@ -20,7 +20,7 @@ export default function App() {
 
   // Identidade da rota: reinicia as animações de entrada e dispara o evento de página
   const routeKey = [route.page, route.topic, route.slug].filter(Boolean).join(':');
-  useReveal(routeKey);
+  useReveal(routeKey, route.anchor ?? null);
 
   useEffect(() => {
     const titles = { content: item?.title, post: page.postTitle(event.name) };

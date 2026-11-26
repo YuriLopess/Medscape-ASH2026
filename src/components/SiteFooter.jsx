@@ -8,7 +8,7 @@ export default function SiteFooter() {
   const { disclosure, footer, partner, ui } = useContent();
 
   return (
-    <footer className="site-footer">
+    <footer data-draw className="site-footer">
       <div className="container">
         <div className="footer-brands">
           <div className="footer-brand">

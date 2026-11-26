@@ -187,6 +187,7 @@ src/
   data/                    edition.js, content.js, transcripts.js, locales/ (pt, en, es), image-variants.json
   hooks/                   useRoute (rotas por hash), useReveal, useDismiss
   lib/                     transcriptPdf.js (PDF da transcrição), initials.js, utils.ts
-  styles.css, front.css    Estilos gerais e da Home; theme-promo.css: paleta e fontes oficiais Medscape Promo
+  styles.css, front.css    Estilos gerais e da Home; theme-promo.css: paleta e fontes oficiais Medscape Promo;
+                           motion.css: animações de entrada, rolagem e hover (curva e durações num lugar só)
 scripts/                   gerar-variantes.py (tamanhos das imagens)
 ```

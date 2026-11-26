@@ -124,7 +124,7 @@ export default function ContentPage({ item, heading }) {
         <section data-reveal className="vp-player" aria-label={ui.video}>
           <VideoPlayer item={item} />
         </section>
-        <aside className="vp-aside">
+        <aside data-reveal className="vp-aside">
           <ShareBar item={item} title={heading && item.upcoming ? heading : item.title} />
           <dl className="vp-facts">
             {facts.map(([label, value]) => (
@@ -136,7 +136,7 @@ export default function ContentPage({ item, heading }) {
           </dl>
           <TranscriptDownload item={item} />
         </aside>
-        <div className="vp-about"><About item={item} /></div>
+        <div data-draw className="vp-about"><About item={item} /></div>
       </div>
 
       {/* Outros vídeos no mesmo desenho da lista de destaques da Home (capa, título, texto e a linha "Em breve ·

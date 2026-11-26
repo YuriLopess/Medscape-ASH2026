@@ -72,7 +72,7 @@ export function TranscriptDownload({ item }) {
 function Speaker({ speaker }) {
   const { page } = useContent();
   return (
-    <li className="sk">
+    <li data-reveal className="sk">
       {/* Identificação: foto, nome, especialidade (etiqueta) e cargo/instituição */}
       <div className="sk-head">
         {speaker.photo ? (
