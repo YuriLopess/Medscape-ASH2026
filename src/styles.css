@@ -1454,3 +1454,9 @@ html:has(.hl-reader[open]) { overflow: hidden; }
   .cp .vp-aside { margin-top: 16px; gap: 18px; padding: 18px; }
   .cp .vp-about { padding-top: 32px; }
 }
+/* Celular: vídeo com mais destaque, quase de borda a borda (8 px de margem em vez da margem da página) e, enquanto
+   é só a capa, um pouco mais alto (3:2 em vez de 16:9); o vídeo de verdade continua 16:9 */
+@media (max-width: 640px) {
+  .cp .vp-player { margin-inline: calc(8px - var(--gutter)); }
+  .cp .cp-player--soon .cp-player-media { aspect-ratio: 3 / 2; }
+}
