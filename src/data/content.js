@@ -30,7 +30,7 @@ const eventBase = {
 // Empresa que solicita a cobertura: patrocina todos os vídeos e assina o cabeçalho (à direita) e o rodapé.
 // Sem logo, aparece o nome. ?v=1: a Cloudflare guarda imagens por 7 dias; ao trocar o arquivo, suba o número.
 const SPONSOR = 'AstraZeneca';
-const partnerLogo = 'images/logos/astrazeneca.png?v=1';
+const partnerLogo = 'images/logos/astrazeneca.png?v=2';
 
 /*
   Áreas terapêuticas: a descoberta principal do site, nesta ordem; cada uma tem página própria em #/<id>.

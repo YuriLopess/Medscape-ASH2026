@@ -66,6 +66,13 @@ function routePreload(page) {
   };
   const hero = preload('images/hero.jpg', '(max-width: 640px) 170vw, (max-width: 900px) 135vw, (max-width: 1280px) 100vw, 88vw');
   const art = preload('images/cobertura-arte.jpg', '(max-width: 900px) 100vw, 1100px');
+  // Capas dos Destaques (Home): também aparecem na primeira tela, mas o navegador só as descobriria depois do
+  // JavaScript. Vão com prioridade baixa, para não atrasar o banner. Mesmos "sizes" de FeaturedVideos.jsx (o primeiro
+  // vídeo é a capa grande; os outros, a lista): se mudar lá, mude aqui, senão a foto é baixada duas vezes.
+  const covers = [
+    preload('images/videos/video-1.jpg', '(max-width: 1000px) 92vw, 760px'),
+    ...[2, 3, 4].map((n) => preload(`images/videos/video-${n}.jpg`, '(max-width: 640px) 40vw, (max-width: 1000px) 32vw, 230px')),
+  ].filter(Boolean);
   // Mesma leitura do hash que src/hooks/useRoute.js
   const script = `<script>(function () {
       var h = location.hash, parts = h.indexOf('#/') === 0 ? h.slice(2).split('?')[0].split('/').filter(Boolean) : [];
@@ -73,10 +80,15 @@ function routePreload(page) {
         : parts[0] === 'pos-ash' || (parts[0] === 'videos' && parts.length > 1) ? ${JSON.stringify(art)}
         : parts[0] === 'videos' ? ${JSON.stringify(hero)} : null;
       if (!img) return;
-      var l = document.createElement('link');
-      l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp';
-      l.setAttribute('fetchpriority', 'high'); l.setAttribute('imagesrcset', img.s); l.setAttribute('imagesizes', img.z);
-      document.head.appendChild(l);
+      function add(i, prio) {
+        var l = document.createElement('link');
+        l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp';
+        l.setAttribute('fetchpriority', prio); l.setAttribute('imagesrcset', i.s); l.setAttribute('imagesizes', i.z);
+        document.head.appendChild(l);
+      }
+      add(img, 'high');
+      // Home (#/) ou a lista de vídeos (#/videos, que abre nos Destaques)
+      if (!parts.length || (parts[0] === 'videos' && parts.length === 1)) ${JSON.stringify(covers)}.forEach(function (c) { add(c, 'low'); });
     })();</script>`;
   // Logo no início do <head>: depois das folhas de estilo, o script esperaria o CSS chegar (~1 s a mais)
   return {

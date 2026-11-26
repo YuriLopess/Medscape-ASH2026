@@ -30,7 +30,7 @@ function VideoPlayer({ item }) {
   const isPost = item.topic === POST;
   return (
     <div className="cp-player cp-player--soon">
-      <Media src={item.image} focus={item.focus} className="cp-player-media">
+      <Media src={item.image} focus={item.focus} eager className="cp-player-media">
         <div className="cp-player-soon">
           <span className="soon-badge soon-badge--large">
             <span className="soon-dot" aria-hidden="true" />
@@ -103,15 +103,20 @@ export default function ContentPage({ item, heading }) {
               Igual em todas as páginas internas */}
           {event.contentArt && (
             <div className="cp-hero-art" aria-hidden="true">
-              <img
-                src={event.contentArt}
-                srcSet={srcSet(event.contentArt)}
-                sizes={ART_SIZES}
-                alt=""
-                width="2172"
-                height="724"
-                fetchPriority="high"
-              />
+              {/* WebP primeiro, igual ao preload do <head> (vite.config.js): sem ele o navegador baixava o JPEG
+                  também, e a arte vinha duas vezes */}
+              <picture>
+                <source type="image/webp" srcSet={srcSet(event.contentArt, 'webp')} sizes={ART_SIZES} />
+                <img
+                  src={event.contentArt}
+                  srcSet={srcSet(event.contentArt)}
+                  sizes={ART_SIZES}
+                  alt=""
+                  width="2172"
+                  height="724"
+                  fetchPriority="high"
+                />
+              </picture>
             </div>
           )}
         </div>
