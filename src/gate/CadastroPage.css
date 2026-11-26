@@ -23,6 +23,7 @@
   --gate-font-body: 'Poppins', system-ui, sans-serif;
 }
 
+:root { color-scheme: only light; } /* só tema claro: o navegador não escurece a página sozinho */
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; background: #fff; color: var(--gate-ink); font: 15px/1.55 var(--gate-font-body); -webkit-font-smoothing: antialiased; }
 h1, h2, p, ul { margin: 0; }
