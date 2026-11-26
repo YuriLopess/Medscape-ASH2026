@@ -12,6 +12,7 @@ import './tailwind.css';
 import './styles.css';
 import './theme-promo.css';
 import './front.css';
+import './motion.css'; // movimento do site (entrada, rolagem e hover), por último
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

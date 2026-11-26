@@ -30,7 +30,7 @@ const eventBase = {
 // Empresa que solicita a cobertura: patrocina todos os vídeos e assina o cabeçalho (à direita) e o rodapé.
 // Sem logo, aparece o nome. ?v=1: a Cloudflare guarda imagens por 7 dias; ao trocar o arquivo, suba o número.
 const SPONSOR = 'AstraZeneca';
-const partnerLogo = 'images/logos/astrazeneca.png?v=1';
+const partnerLogo = 'images/logos/astrazeneca.png?v=2';
 
 /*
   Áreas terapêuticas: a descoberta principal do site, nesta ordem; cada uma tem página própria em #/<id>.
@@ -192,6 +192,10 @@ export function buildContent(lang) {
   const L = locales[lang] ?? locales[defaultLang];
 
   const event = { ...eventBase, ...L.event, ...L.editions?.[EDITION] };
+  // Último dia do congresso por extenso ("15 de dezembro"): diz quando sai o Pós-ASH
+  event.endLabel = event.end
+    ? new Intl.DateTimeFormat(L.htmlLang, { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${event.end}T00:00:00Z`))
+    : null;
 
   // Cada dia do congresso já formatado no idioma atual (dia da semana, número, mês)
   const part = (opts) => new Intl.DateTimeFormat(L.htmlLang, { ...opts, timeZone: 'UTC' });

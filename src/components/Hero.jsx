@@ -27,8 +27,12 @@ export default function Hero() {
               <stop offset=".66" stopColor="#4a5fe0" stopOpacity=".28" />
               <stop offset="1" stopColor="#a02b93" stopOpacity=".42" />
             </linearGradient>
+            {/* Desfoque das bordas da faixa: ela se dissolve no azul e na foto, sem corte seco */}
+            <filter id="front-soft" x="-50%" y="-10%" width="200%" height="120%">
+              <feGaussianBlur stdDeviation="16" />
+            </filter>
           </defs>
-          <path className="front-arcs-band" d="M776 -30 C 648 170, 622 470, 716 674 C 764 778, 838 878, 930 985 L1000 985 C 898 866, 812 758, 764 652 C 678 462, 704 172, 834 -30 Z" />
+          <path className="front-arcs-band" filter="url(#front-soft)" d="M776 -30 C 648 170, 622 470, 716 674 C 764 778, 838 878, 930 985 L1000 985 C 898 866, 812 758, 764 652 C 678 462, 704 172, 834 -30 Z" />
           {/* Halo e linha, nas duas bordas */}
           <path stroke="url(#front-line)" strokeWidth="9" strokeOpacity=".16" d="M776 -30 C 648 170, 622 470, 716 674 C 764 778, 838 878, 930 985" />
           <path stroke="url(#front-line)" strokeWidth="9" strokeOpacity=".16" d="M834 -30 C 704 172, 678 462, 764 652 C 812 758, 898 866, 1000 985" />

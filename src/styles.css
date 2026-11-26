@@ -180,6 +180,15 @@ button { font: inherit; color: inherit; }
 .media { position: relative; overflow: hidden; background: var(--navy); }
 .media img { width: 100%; height: 100%; object-fit: cover; }
 .media picture { display: contents; } /* o <picture> não cria caixa: a foto continua ocupando o quadro todo */
+/* Prévia desfocada (Media.jsx) por baixo da foto: aparece na hora; a foto entra por cima quando chega e a prévia sai */
+.media-ph { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(14px); transform: scale(1.12); transition: opacity .6s ease .1s; }
+.media.has-ph img { position: relative; opacity: 0; transition: opacity .5s ease, transform var(--t-zoom, 1.1s) var(--ease-out, ease); } /* junto com o zoom do hover (motion.css) */
+.media.has-ph.is-loaded img { opacity: 1; }
+.media.is-loaded .media-ph { opacity: 0; }
+/* Banner: prévia no mesmo enquadramento da foto (encostada à direita; no celular, no alto) */
+.front-media .media-ph { background-position: 100% 50%; }
+@media (max-width: 900px) { .front-media .media-ph { background-position: 82% 50%; } }
+@media (max-width: 640px) { .front-media .media-ph { background-position: 76% 0%; } }
 .media-placeholder { position: absolute; inset: 0; display: grid; place-items: center end; padding-right: 8%; background: linear-gradient(135deg, #0d2e5c 0%, #1d5aa3 55%, #4b93dc 100%); }
 .media-placeholder span { font-family: var(--sans); font-weight: 700; font-size: clamp(18px, 3vw, 30px); line-height: 1; color: rgba(255,255,255,.35); letter-spacing: -.01em; }
 .play-badge { position: absolute; left: 16px; bottom: 14px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 2px solid #fff; background: rgba(8,31,64,.45); color: #fff; backdrop-filter: blur(2px); transition: background .2s, border-color .2s; }
@@ -855,6 +864,7 @@ button { font: inherit; color: inherit; }
 /* Arte da cidade (formas de cápsula já na imagem): avança até a borda direita da tela, como na referência */
 .cp-hero-art { margin-right: calc(-1 * max(var(--gutter), (100vw - var(--max)) / 2)); }
 .cp-hero-art img { display: block; width: 100%; height: auto; }
+.cp-hero-art picture { display: contents; } /* o <picture> (WebP + JPEG) não cria caixa: as regras da arte valem para o <img> como antes */
 
 .cp-main { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; gap: clamp(24px, 3vw, 40px); padding-block: clamp(36px, 5vw, 64px); }
 /* Telas médias: lateral um pouco mais larga, para a frase de apoio caber numa linha com letra legível */
@@ -876,7 +886,6 @@ button { font: inherit; color: inherit; }
 .cp-player-soon-note { max-width: 40ch; font-size: 14.5px; line-height: 1.5; color: rgb(255 255 255 / .85); }
 .cp-player { position: relative; }
 /* Frase temporária do Pós-ASH, em destaque na abertura */
-.cp-summary--notice { width: fit-content; padding: 12px 18px; border-left: 3px solid var(--kind); border-radius: 0 8px 8px 0; background: #fff; font-weight: 600; color: var(--ink); }
 /* Selo do patrocinador no canto do vídeo: fundo branco para a logo manter as cores originais */
 .cp-player-sponsor { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 14px 12px; border-radius: 8px; background: rgb(255 255 255 / .95); box-shadow: 0 6px 18px rgb(2 20 60 / .25); pointer-events: none; }
 .cp-player-sponsor-label { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -1445,7 +1454,6 @@ html:has(.hl-reader[open]) { overflow: hidden; }
   .cp .cp-title { margin: 0 0 6px; font-size: clamp(26px, 7.4vw, 30px); }
   .cp .cp-byline { margin: 0 0 10px; font-size: 13px; }
   .cp .cp-summary { font-size: 15.5px; line-height: 1.55; }
-  .cp .cp-summary--notice { padding: 10px 14px; font-size: 15px; }
   .cp .vp-layout { padding-top: 20px; }
   /* "Em breve" numa faixa de vidro no pé da capa, em vez de um quadro que cobria quase toda a imagem */
   .cp .cp-player-soon { left: 10px; right: 10px; top: auto; bottom: 10px; width: auto; align-items: flex-start; gap: 2px; padding: 10px 14px; border-radius: 10px; text-align: left; transform: none; }
@@ -1455,4 +1463,10 @@ html:has(.hl-reader[open]) { overflow: hidden; }
   .cp .cp-player-soon-note { max-width: none; font-size: 12.5px; line-height: 1.45; }
   .cp .vp-aside { margin-top: 16px; gap: 18px; padding: 18px; }
   .cp .vp-about { padding-top: 32px; }
+}
+/* Celular: vídeo com mais destaque, quase de borda a borda (8 px de margem em vez da margem da página) e, enquanto
+   é só a capa, um pouco mais alto (3:2 em vez de 16:9); o vídeo de verdade continua 16:9 */
+@media (max-width: 640px) {
+  .cp .vp-player { margin-inline: calc(8px - var(--gutter)); }
+  .cp .cp-player--soon .cp-player-media { aspect-ratio: 3 / 2; }
 }

@@ -27,7 +27,7 @@ export function Meta({ item }) {
 function Feature({ item }) {
   return (
     <a className="fv-feature" href={item.href} onClick={() => trackCard(item, 0, 'destaques')}>
-      <Media src={item.image} focus={item.focus} className="fv-feature-media" sizes="(max-width: 1000px) 92vw, 760px">
+      <Media src={item.image} focus={item.focus} eager className="fv-feature-media" sizes="(max-width: 1000px) 92vw, 760px">
         <span className="fv-feature-shade" aria-hidden="true" />
         {!item.upcoming && <span className="fv-play fv-play--large" aria-hidden="true"><Play /></span>}
         <span className="fv-feature-body">
@@ -44,7 +44,7 @@ function Row({ item, index }) {
   return (
     <li>
       <a className="fv-row" href={item.href} onClick={() => trackCard(item, index, 'destaques')}>
-        <Media src={item.image} focus={item.focus} className="fv-row-media" sizes="(max-width: 640px) 40vw, (max-width: 1000px) 32vw, 230px">
+        <Media src={item.image} focus={item.focus} eager className="fv-row-media" sizes="(max-width: 640px) 40vw, (max-width: 1000px) 32vw, 230px">
           {!item.upcoming && <span className="fv-play" aria-hidden="true"><Play /></span>}
         </Media>
         <span className="fv-row-body">

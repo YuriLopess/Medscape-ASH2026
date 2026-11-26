@@ -187,6 +187,8 @@ src/
   data/                    edition.js, content.js, transcripts.js, locales/ (pt, en, es), image-variants.json
   hooks/                   useRoute (rotas por hash), useReveal, useDismiss
   lib/                     transcriptPdf.js (PDF da transcrição), initials.js, utils.ts
-  styles.css, front.css    Estilos gerais e da Home; theme-promo.css: paleta e fontes oficiais Medscape Promo
-scripts/                   gerar-variantes.py (tamanhos das imagens)
+  styles.css, front.css    Estilos gerais e da Home; theme-promo.css: paleta e fontes oficiais Medscape Promo;
+                           motion.css: animações de entrada, rolagem e hover (curva e durações num lugar só)
+scripts/                   gerar-variantes.py (tamanhos das imagens e as prévias desfocadas de image-placeholders.json)
+vercel.json                Cache das imagens e dos arquivos do build na Vercel
 ```
